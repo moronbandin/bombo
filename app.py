@@ -1,5 +1,6 @@
 import streamlit as st
 import scipy.stats as stats
+import random
 
 # Función para calcular a probabilidade de que polo menos un tema estudado saia no exame
 def calcular_probabilidade(temas_totais, temas_estudados, bolas_extraidas):
@@ -57,5 +58,11 @@ if st.button("📊 Calcular Probabilidade"):
             unsafe_allow_html=True
         )
 
-# Información adicional
-st.info("🔹 Usa esta ferramenta para planificar o teu estudo e aumentar as túas posibilidades de suceso no exame.")
+# Botón para realizar o sorteo
+if st.button("🎲 Sortear temas"):
+    if bolas_extraidas > temas_totais:
+        st.error("Erro: O número de bolas extraídas non pode ser maior que o número total de temas.")
+    else:
+        temas = list(range(1, temas_totais + 1))
+        temas_sorteados = random.sample(temas, bolas_extraidas)
+        st.success(f"📜 Os temas sorteados son: {', '.join(map(str, temas_sorteados))}")
